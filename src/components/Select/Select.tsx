@@ -8,7 +8,8 @@ export interface SelectProps
   size?: 'sm' | 'md' | 'lg';
   variant?: 'outline' | 'field' | 'flushed' | 'unStyled';
   borderColor?: string;
-  optionList?: string[];
+  options: string[];
+  getSelectedValue: (value: string) => void;
 }
 
 const Select = ({
@@ -16,13 +17,17 @@ const Select = ({
   size = 'md',
   variant = 'outline',
   borderColor = neutral['200'],
-  optionList = ['Option 1', 'Option 2', 'Option 3'],
+  options,
+  getSelectedValue,
   ...restProps
 }: SelectProps) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+    // 선택한 값 외부로 전달
+    getSelectedValue(selectedValue);
   };
 
   return (
@@ -36,7 +41,7 @@ const Select = ({
         <option value="" selected hidden>
           {placeholder}
         </option>
-        {optionList.map(option => (
+        {options.map(option => (
           <option value={option}>{option}</option>
         ))}
       </S.SelectWrapper>

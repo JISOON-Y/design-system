@@ -97,7 +97,7 @@ export const InputVariantType: Record<
 
 // 포커스 테두리 색상 설정
 const setFocusBorderColor = (focusBorderColor?: string) => {
-  return focusBorderColor ? focusBorderColor : `${neutral['800']}`;
+  return focusBorderColor ?? `${neutral['800']}`;
 };
 
 // 에러 테두리 색상 설정

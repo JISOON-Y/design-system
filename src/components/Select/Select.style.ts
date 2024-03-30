@@ -11,7 +11,8 @@ interface SelectStyleProps {
 export const SelectContainer = styled.div<SelectStyleProps>`
   ${({ size }) => SelectSizeType[size]};
 
-  ${({ variant, borderColor }) => SelectVariantType[variant!](borderColor)};
+  ${({ variant, borderColor }) =>
+    variant ? SelectVariantType[variant](borderColor) : null};
 
   background: ${({
     variant,
@@ -20,6 +21,7 @@ export const SelectContainer = styled.div<SelectStyleProps>`
   }
     no-repeat`};
   background-size: 24px;
+  display: flex;
 `;
 
 export const SelectWrapper = styled.select<SelectStyleProps>`
@@ -37,36 +39,36 @@ export const SelectWrapper = styled.select<SelectStyleProps>`
 `;
 
 // select size style
-export const SelectSizeType: Record<string, CSSObject> = {
+export const SelectSizeType: CSSObject = {
   sm: {
     padding: '8.75px 10px',
     borderRadius: '6px',
     border: '1.5px solid',
-  },
+  } as const,
   md: {
     padding: '13.5px 12px',
     borderRadius: '8px',
     border: '1.75px solid',
-  },
+  } as const,
   lg: {
     padding: '16.5px 14px',
     borderRadius: '10px',
     border: '2px solid',
-  },
-};
+  } as const,
+} as const;
 
 // select font size style
-export const SelectFontType: Record<string, CSSObject> = {
+export const SelectFontType: CSSObject = {
   sm: {
     fontSize: '13px',
-  },
+  } as const,
   md: {
     fontSize: '15px',
-  },
+  } as const,
   lg: {
     fontSize: '16px',
-  },
-};
+  } as const,
+} as const;
 
 // select variant style
 export const SelectVariantType: Record<

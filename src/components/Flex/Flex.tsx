@@ -1,34 +1,32 @@
-import React from 'react';
+import React, { CSSProperties, PropsWithChildren } from 'react';
 import * as S from './Flex.style';
 
-export interface FlexProps {
-  size?: number;
-  align: 'start' | 'center' | 'end' | 'baseline' | 'stretch';
-  direction: 'row' | 'column' | 'row-reverse' | 'column-reverse';
-  justify: 'start' | 'center' | 'end' | 'between' | 'around';
-  wrap: 'nowrap' | 'wrap' | 'wrap-reverse';
-  gap: number;
-  children: React.ReactNode;
+// CSSProperties에서 지정된 속성 중에서 일부 속성만을 선택적으로 포함하는 타입을 생성
+export type PickCSSProperties<Properties extends keyof CSSProperties> = Partial<
+  Pick<CSSProperties, Properties>
+>;
+
+export interface FlexProps
+  extends PickCSSProperties<
+    | 'display'
+    | 'flex' // flex-grow, flex-shrink, flex-basis의 단축 속성
+    | `flex${'Wrap' | 'Basis' | 'Grow' | 'Shrink' | 'Direction'}` // flex-wrap, flex-basis, flex-grow, flex-shrink, flex-direction의 속성을 선택
+    | `align${'Items' | 'Content' | 'Self'}`
+    | 'justifyContent'
+    | 'gap'
+  > {
+  width?: number;
+  height?: number;
 }
 
 const Flex = ({
-  size,
-  align,
-  direction,
-  justify,
-  wrap,
-  gap,
+  width,
+  height,
   children,
-}: FlexProps) => {
+  ...flexProps
+}: PropsWithChildren<FlexProps>) => {
   return (
-    <S.FlexContainer
-      size={size}
-      align={align}
-      direction={direction}
-      justify={justify}
-      wrap={wrap}
-      gap={gap}
-    >
+    <S.FlexContainer style={{ width, height, ...flexProps }}>
       {children}
     </S.FlexContainer>
   );

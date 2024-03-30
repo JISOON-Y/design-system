@@ -1,40 +1,50 @@
 import { Meta, StoryFn } from '@storybook/react';
-import Flex from './Flex';
+import Flex, { FlexProps } from './Flex';
 import Box from '../Box/Box';
+import { PropsWithChildren } from 'react';
 
 export default {
   title: 'Components/Flex', // story 이름
   component: Flex,
-  args: { direction: 'row', align: 'start', justify: 'center', wrap: 'nowrap' },
-} as Meta<typeof Vertical>;
+} as Meta;
 
-const Template: StoryFn<typeof Flex> = args => (
-  <Flex {...args}>{args.children}</Flex>
+const Template: StoryFn<PropsWithChildren<FlexProps>> = args => (
+  <Flex {...args} />
 );
 
 const BoxChild = () => {
   return (
     <>
-      <Box size={200} bgColor={'red'} radius={10} />
-      <Box size={180} bgColor={'orange'} radius={10} />
-      <Box size={160} bgColor={'yellow'} radius={10} />
-      <Box size={140} bgColor={'green'} radius={10} />
-      <Box size={120} bgColor={'blue'} radius={10} />
+      <Box width={200} height={200} backgroundColor="red" borderRadius={10} />
+      <Box
+        width={180}
+        height={180}
+        backgroundColor="orange"
+        borderRadius={10}
+      />
+      <Box
+        width={160}
+        height={160}
+        backgroundColor="yellow"
+        borderRadius={10}
+      />
+      <Box width={140} height={140} backgroundColor="green" borderRadius={10} />
+      <Box width={120} height={120} backgroundColor="blue" borderRadius={10} />
     </>
   );
 };
 
 export const Vertical = Template.bind({});
 Vertical.args = {
-  direction: 'column',
+  flexDirection: 'column',
+  height: 800,
   gap: 10,
-  size: 800,
   children: BoxChild(),
 };
 
 export const Horizontal = Template.bind({});
 Horizontal.args = {
+  width: 800,
   gap: 20,
-  size: 800,
   children: BoxChild(),
 };
