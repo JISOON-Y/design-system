@@ -6,27 +6,23 @@ export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'outline' | 'field' | 'flushed' | 'unStyled';
-  state?: 'available' | 'disabled' | 'readOnly' | 'invalid';
   borderColor?: string;
   focusBorderColor?: string;
   errorBorderColor?: string;
+  error?: boolean;
 }
 
 const Input = ({
   size = 'md',
   variant = 'outline',
-  state = 'available',
   borderColor = neutral['200'],
   focusBorderColor = purple['500'],
   errorBorderColor = red['500'],
+  error = false,
   ...restProps
 }: InputProps) => {
-  const isDisabled = state === 'disabled';
-  const isReadOnly = state === 'readOnly';
-  const isInvalid = state === 'invalid';
-
-  const setBorderColor = (isInvalid: boolean) => {
-    return isInvalid ? errorBorderColor : borderColor;
+  const setBorderColor = (error: boolean) => {
+    return error ? errorBorderColor : borderColor;
   };
 
   return (
@@ -35,11 +31,11 @@ const Input = ({
       placeholder={restProps.placeholder}
       size={size}
       variant={variant}
-      borderColor={setBorderColor(isInvalid)}
+      borderColor={setBorderColor(error)}
       focusBorderColor={focusBorderColor}
-      error={isInvalid}
-      disabled={isDisabled}
-      readOnly={isReadOnly}
+      disabled={restProps.disabled}
+      readOnly={restProps.readOnly}
+      error={error}
     />
   );
 };

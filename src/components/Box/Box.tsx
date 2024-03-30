@@ -1,19 +1,16 @@
 import React from 'react';
+import { PickCSSProperties } from '../Flex/Flex';
 
-interface BoxProps {
-  size: number;
-  bgColor: string;
-  radius?: number;
-}
+interface BoxProps
+  extends PickCSSProperties<
+    'width' | 'height' | 'borderRadius' | 'backgroundColor'
+  > {}
 
-const Box = ({ size, bgColor, radius }: BoxProps) => {
+const Box = ({ ...boxProps }: BoxProps) => {
   const style = {
     display: 'block',
-    width: size,
-    height: size,
-    backgroundColor: bgColor,
-    borderRadius: radius,
     color: 'white',
+    ...boxProps,
   };
   return <div style={style} />;
 };

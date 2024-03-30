@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import Input, { InputProps } from './Input';
 import { neutral, red } from '../../styles/color';
-import { ItemList } from '../../styles/common.style';
+import Flex from '../Flex/Flex';
 
 export default {
   title: 'Components/Input',
@@ -19,12 +19,6 @@ export default {
         options: ['outline', 'field', 'flushed', 'unStyled'],
       },
     },
-    state: {
-      control: {
-        type: 'radio',
-        options: ['available', 'readOnly', 'disabled', 'invalid'],
-      },
-    },
   },
 } as Meta;
 
@@ -35,83 +29,58 @@ Basic.args = {
   placeholder: 'Basic placeholder',
   size: 'md',
   variant: 'outline',
-  state: 'available',
   borderColor: `${neutral['200']}`,
 };
 
 export const BySize: StoryFn<InputProps> = args => (
-  <ItemList>
-    <Input {...args} placeholder={'Small size placeholder'} size="sm" />
-    <Input {...args} placeholder={'Medium size placeholder'} size="md" />
-    <Input {...args} placeholder={'Large size placeholder'} size="lg" />
-  </ItemList>
+  <Flex gap={16} flexDirection="column" alignItems="normal">
+    <Input {...args} placeholder="Small size placeholder" size="sm" />
+    <Input {...args} placeholder="Medium size placeholder" size="md" />
+    <Input {...args} placeholder="Large size placeholder" size="lg" />
+  </Flex>
 );
 
 export const ByVariant: StoryFn<InputProps> = args => (
-  <ItemList>
-    <Input {...args} placeholder={'Outline style placeholder'} />
+  <Flex gap={16} flexDirection="column" alignItems="normal">
+    <Input {...args} placeholder="Outline style placeholder" />
+    <Input {...args} placeholder="Field style placeholder" variant="field" />
     <Input
       {...args}
-      placeholder={'Field style placeholder'}
-      variant={'field'}
+      placeholder="Flushed style placeholder"
+      variant="flushed"
     />
-    <Input
-      {...args}
-      placeholder={'Flushed style placeholder'}
-      variant={'flushed'}
-    />
-    <Input
-      {...args}
-      placeholder={'UnStyled placeholder'}
-      variant={'unStyled'}
-    />
-  </ItemList>
+    <Input {...args} placeholder="UnStyled placeholder" variant="unStyled" />
+  </Flex>
 );
 
 export const ByState: StoryFn<InputProps> = args => (
-  <ItemList>
-    <Input {...args} placeholder={'Available state placeholder'} />
-    <Input
-      {...args}
-      placeholder={'Disabled state placeholder'}
-      state={'disabled'}
-    />
-    <Input
-      {...args}
-      placeholder={'ReadOnly state placeholder'}
-      state={'readOnly'}
-    />
-    <Input
-      {...args}
-      placeholder={'Invalid state placeholder'}
-      state={'invalid'}
-    />
-  </ItemList>
+  <Flex gap={16} flexDirection="column" alignItems="normal">
+    <Input {...args} placeholder="Available state placeholder" />
+    <Input {...args} placeholder="Disabled state placeholder" disabled={true} />
+    <Input {...args} placeholder="ReadOnly state placeholder" readOnly={true} />
+    <Input {...args} placeholder="Invalid state placeholder" error={true} />
+  </Flex>
 );
 
 export const ByFocusAndErrorBorderColor: StoryFn<InputProps> = args => (
-  <ItemList>
+  <Flex gap={16} flexDirection="column" alignItems="normal">
     <Input
       {...args}
-      placeholder={'Focus placeholder'}
-      focusBorderColor={'orange'}
+      placeholder="Focus placeholder"
+      focusBorderColor="orange"
     />
+    <Input {...args} placeholder="Focus placeholder" focusBorderColor="green" />
     <Input
       {...args}
-      placeholder={'Focus placeholder'}
-      focusBorderColor={'green'}
-    />
-    <Input
-      {...args}
-      placeholder={'Error placeholder'}
-      state={'invalid'}
+      placeholder="Error placeholder"
+      error={true}
       errorBorderColor={red['200']}
     />
     <Input
       {...args}
-      placeholder={'Error placeholder'}
-      state={'invalid'}
+      placeholder="Error placeholder"
+      error={true}
       errorBorderColor={red['600']}
     />
-  </ItemList>
+  </Flex>
 );
