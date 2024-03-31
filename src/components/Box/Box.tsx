@@ -11,7 +11,7 @@ const Box = ({ ...boxProps }: BoxProps) => {
     display: 'block',
     color: 'white',
     ...boxProps,
-  };
+
   return <div style={style} />;
 };
 
