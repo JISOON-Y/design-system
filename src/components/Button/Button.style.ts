@@ -1,9 +1,10 @@
 import styled, { CSSObject } from 'styled-components';
 
-interface ButtonContainerStyleProps {
+interface ButtonContainerProps {
   color: string;
   size: CSSObject;
   variant: string;
+  minSize?: { width?: number; height?: number };
 }
 
 const setBackgroundStyle = (variant: string, color: string) => {
@@ -44,10 +45,14 @@ const setColorStyle = (variant: string, color: string) => {
   }
 };
 
-export const ButtonContainer = styled.button<ButtonContainerStyleProps>`
+export const ButtonContainer = styled.button<ButtonContainerProps>`
   ${props => props.size};
 
   color: ${props => setColorStyle(props.variant, props.color)};
+  min-width: ${props =>
+    props.minSize && props.minSize.width ? props.minSize.width : null}px;
+  min-height: ${props =>
+    props.minSize && props.minSize.height ? props.minSize.height : null}px;
   background: ${props => setBackgroundStyle(props.variant, props.color)};
   border: ${props => setBorderStyle(props.variant, props.color)};
   text-decoration: ${props => setTextStyle(props.variant)};
@@ -58,23 +63,24 @@ export const ButtonContainer = styled.button<ButtonContainerStyleProps>`
 
   font-family: 'Pretendard-Medium';
   display: inline-block;
+  cursor: pointer;
 `;
 
 // button size style
-export const ButtonSizeType: Record<string, CSSObject> = {
+export const ButtonSizeType = {
   small: {
     fontSize: '14px',
     padding: '10px 12px',
     borderRadius: '8px',
-  },
+  } as const,
   medium: {
     fontSize: '18px',
     padding: '12px 16px',
     borderRadius: '10px',
-  },
+  } as const,
   large: {
     fontSize: '22px',
     padding: '14px 20px',
     borderRadius: '12px',
-  },
-};
+  } as const,
+} as const;
